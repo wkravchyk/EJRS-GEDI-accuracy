@@ -2,7 +2,7 @@ library(sf)
 library(dplyr)
 
 #this script follows two assumptions: 
-#1. that DO, PN and RR study area polygons were used to subset GEDI data.
+#1. that OV, NF and RR study area polygons were used to subset GEDI data.
 #   GEDI data subsetting at the download stage significantly lowers required 
 #   disk space and processing time needed to prepare the data
 #
@@ -10,8 +10,8 @@ library(dplyr)
 #   this step can be done, for example, using GEDI Subsetter python script
 
 #list GEDI measurements located in study areas
-glist_do = list.files("path/to/gedi/files/located/in/DO", pattern = ".gpkg$", full.names = TRUE)
-glist_pn = list.files("path/to/gedi/files/located/in/PN", pattern = ".gpkg$", full.names = TRUE)
+glist_ov = list.files("path/to/gedi/files/located/in/OV", pattern = ".gpkg$", full.names = TRUE)
+glist_nf = list.files("path/to/gedi/files/located/in/NF", pattern = ".gpkg$", full.names = TRUE)
 glist_rr = list.files("path/to/gedi/files/located/in/RR", pattern = ".gpkg$", full.names = TRUE)
 
 #define function that will:
@@ -29,14 +29,14 @@ f_rqfd = function(gedilist) {
   return(g)
 }
 #apply prepared function to all GEDI measurements
-g_do = lapply(glist_do, f_rqfd)
-g_do = do.call(rbind, g_do)
-g_pn = lapply(glist_pn, f_rqfd)
-g_pn = do.call(rbind, g_pn)
+g_ov = lapply(glist_ov, f_rqfd)
+g_ov = do.call(rbind, g_ov)
+g_nf = lapply(glist_nf, f_rqfd)
+g_nf = do.call(rbind, g_nf)
 g_rr = lapply(glist_rr, f_rqfd)
 g_rr = do.call(rbind, g_rr)
 
 #write processed GEDI measurements to file
-st_write(g_do, "path/to/gedi/measurements/in/DO/study/area")
-st_write(g_pn, "path/to/gedi/measurements/in/PN/study/area")
+st_write(g_ov, "path/to/gedi/measurements/in/OV/study/area")
+st_write(g_nf, "path/to/gedi/measurements/in/NF/study/area")
 st_write(g_rr, "path/to/gedi/measurements/in/RR/study/area")

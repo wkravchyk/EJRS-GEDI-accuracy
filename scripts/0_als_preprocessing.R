@@ -46,18 +46,18 @@ return(metrics)
 
 #read GEDI L2A measurements
 #this script assumes that GEDI data was processed using 1_gedi_data_preprocessing script located in the repository
-g_do = st_read("path/to/gedi/measurements/in/DO/study/area")
-g_pn = st_read("path/to/gedi/measurements/in/PN/study/area")
+g_ov = st_read("path/to/gedi/measurements/in/OV/study/area")
+g_nf = st_read("path/to/gedi/measurements/in/NF/study/area")
 g_rr = st_read("path/to/gedi/measurements/in/RR/study/area")
 
 #define multisession processing strategy to speed up the process
 plan(multisession, workers = 5L)
 #calculate reference ALS point cloud metrics for GEDI measurements
-ref_metrics_do = plot_metrics(als_norm, func = myMetrics(Z, ReturnNumber, 40), g_do)
-ref_metrics_pn = plot_metrics(als_norm, func = myMetrics(Z, ReturnNumber, 40), g_pn)
+ref_metrics_ov = plot_metrics(als_norm, func = myMetrics(Z, ReturnNumber, 40), g_ov)
+ref_metrics_nf = plot_metrics(als_norm, func = myMetrics(Z, ReturnNumber, 40), g_nf)
 ref_metrics_rr = plot_metrics(als_norm, func = myMetrics(Z, ReturnNumber, 40), g_rr)
 
 #write calculated metrics
-st_write(ref_metrics_do, "path/to/output/file_do.gpkg")
-st_write(ref_metrics_pn, "path/to/output/file_pn.gpkg")
+st_write(ref_metrics_ov, "path/to/output/file_ov.gpkg")
+st_write(ref_metrics_nf, "path/to/output/file_nf.gpkg")
 st_write(ref_metrics_rr, "path/to/output/file_rr.gpkg")
